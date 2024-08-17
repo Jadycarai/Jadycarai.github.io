@@ -1,0 +1,19 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+}
+canvas {
+  border: 1px solid white;
+}
+#gameOver {
+  display: none;
+  color: red;
+  font-size: 48px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
