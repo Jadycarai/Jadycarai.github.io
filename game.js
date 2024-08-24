@@ -11,7 +11,7 @@ let gameOver = false;
 
 function createBalls() {
     balls = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) { // Reduzimos para 5 bolas para simplificar
         let ball;
         do {
             ball = {
@@ -33,7 +33,11 @@ function draw() {
     ctx.fillRect(shadow.x * cellSize, shadow.y * cellSize, cellSize, cellSize);
 
     ctx.fillStyle = 'yellow';
-    balls.forEach(ball => ctx.beginPath() && ctx.arc(ball.x * cellSize + cellSize / 2, ball.y * cellSize + cellSize / 2, cellSize / 4, 0, 2 * Math.PI) && ctx.fill());
+    balls.forEach(ball => {
+        ctx.beginPath();
+        ctx.arc(ball.x * cellSize + cellSize / 2, ball.y * cellSize + cellSize / 2, cellSize / 4, 0, 2 * Math.PI);
+        ctx.fill();
+    });
 
     if (gameOver) {
         document.getElementById('endScreen').classList.remove('hidden');
@@ -70,6 +74,8 @@ function moveShadow() {
 
     if (shadow.x === player.x && shadow.y === player.y) {
         gameOver = true;
+        document.getElementById('endMessage').innerText = 'Game Over! A sombra te pegou.';
+        document.getElementById('endScreen').classList.remove('hidden');
     }
 
     draw();
@@ -79,16 +85,16 @@ function checkCollisions() {
     balls = balls.filter(ball => ball.x !== player.x || ball.y !== player.y);
 
     if (balls.length === 0) {
+        gameOver = true;
+        document.getElementById('endMessage').innerText = 'Você ganhou! Coletou todas as bolinhas.';
         document.getElementById('endScreen').classList.remove('hidden');
-        document.getElementById('endMessage').innerText = 'Boa noite cidadão, alalalalalalalall';
-        return;
     }
 }
 
 function setup() {
     createBalls();
     draw();
-    setInterval(moveShadow, 500);
+    setInterval(moveShadow, 1000); // Ajustado para mover a sombra a cada segundo
 }
 
 document.addEventListener('keydown', (e) => {
